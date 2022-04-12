@@ -1,28 +1,70 @@
 class queue{
     constructor(){
         this.data= [];
+        this.Max = 6;
         this.front = -1;
         this.rear = -1;
+        this.data = new Array(this.Max);
     }
-    enQueue(value){
-        this.rear++;
-            this.data[this.rear] = value;
+    enQueue(x){
+        if (this.rear == (this.Max - 1))
+        {
+            console.log("Queue size limit reached.");
+        }
+        else if(this.front==-1 && this.rear == -1)
+        {
+            this.front = this.rear = 0;
+            this.data[this.rear] = x;
+            console.log(x + " is added into the queue.");
+        }
+        else
+        {
+            this.data[++this.rear] = x;
+            console.log(x + " is added into the queue.");
+        }
+
     }
     peek(){
-        if(this.front== this.rear )
-            console.log("queue is empty");
-        else{
-            console.log(this.data[this.front+1]);
+        if (this.rear == this.front)
+        {
+            console.log("Queue is empty.");
+        }
+        else
+        {
+            return this.data[this.front];
         }
     }
     deQueue(){
-        if(this.front== this.rear )
-            console.log("queue is empty from dequeue");
-        else{
-            this.front++;
-            let x = this.data[this.front];
-            console.log(x+"is deleted from queue");
+        if (this.rear == -1 && this.front == -1)
+        {
+            console.log("Queue is empty.");
         }
+        else if(this.rear == this.front)
+        {
+            this.front = this.rear = -1;
+
+        }
+        else
+        {
+            let x = this.data[this.front];
+            console.log(x + " is deleted from the queue.");
+            this.front++;
+        }
+    }
+    isEmpty(){
+        if (this.rear == -1 && this.front == -1)
+        {
+            console.log("Queue is empty.");
+        }
+        else
+        {
+            console.log("Queue is not empty.");
+        }
+
+    }
+    size()
+    {
+        return (this.rear - this.front)+1;
     }
     printList(){
         if(this.front== -1 && this.rear == -1)
@@ -39,6 +81,9 @@ myQueue.enQueue(10);
 myQueue.enQueue(20);
 myQueue.enQueue(30);
 myQueue.enQueue(40);
+myQueue.enQueue(50);
+myQueue.enQueue(60);
+myQueue.enQueue(70);
 myQueue.printList();
 myQueue.deQueue();
-myQueue.peek();
+console.log(myQueue.peek());

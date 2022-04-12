@@ -8,19 +8,31 @@ function quickSort(arr,lb,ub){
     return arr;
 }
 function partition(arr,lb,ub){
-    let pivot = arr[ub];
-    let start = lb, end =ub;
-    for(let i= start;i<end;i++){
-        if(arr[i]<pivot){
-            let temp = arr[start];
-            arr[start] = arr[i];
-            arr[i] = temp;
+    let start = lb;
+    let end = ub - 1;
+    let pivot = ub;
+
+    while (start <= end)
+    {
+        while (arr[start] < arr[pivot])
+        {
             start++;
         }
+        while (end>= start && arr[end] >= arr[pivot])
+        {
+            end--;
+        }
+        if (start < end)
+        {
+            let temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+        }
     }
-    let temp = arr[start];
-    arr[start] = pivot;
-    arr[end] = temp;
+    let temp1 = arr[start];
+    arr[start] = arr[pivot];
+    arr[pivot] = temp1;
+
     return start;
 }
 

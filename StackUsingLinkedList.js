@@ -8,6 +8,31 @@ class Stack {
     constructor() {
         this.top = null;
     }
+    // Insert the element at the top of the stack.
+    push(value) {
+        const newNode = new Node(value);
+
+
+            newNode.next = this.top;
+            this.top = newNode;
+        }
+    pop(){
+        let temp = this.top;
+        if(this.top == null)
+            console.log("The stack is empty");
+        else{
+            console.log("The deleted value is" +this.top.value);
+            this.top = this.top.next;
+            temp = null;
+        }
+    }
+    // Return the top element.
+    peek() {
+        if(this.top == null)
+            console.log("stack is empty");
+        else
+            console.log("The top element is :" +this.top.value);
+    }
     printList() {
         let list = [];
         let currentNode = this.top;
@@ -16,41 +41,13 @@ class Stack {
             currentNode = currentNode.next;
         }
         console.log(list + " ");
-
     }
 
-    // Return the top element.
-    peek() {
-        if(this.top == null)
-            console.log("stack is empty");
-        else
-            console.log("The top element is :" +this.top.value);
-    }
-
-    // Insert the element at the top of the stack.
-    push(value) {
-        const newNode = new Node(value);
-
-        if (this.top === 0) {
-            this.top = newNode;
-            //this.bottom = newNode;
-        } else {
-            newNode.next = this.top;
-            this.top = newNode;
-        }
 
 
 
-    }
 
-    pop(){
-        if(this.top == null)
-            console.log("The stack is empty");
-        else{
-            console.log("The deleted value is" +this.top.value);
-            this.top = this.top.next;
-        }
-    }
+
 }
 const myStack = new Stack();
 

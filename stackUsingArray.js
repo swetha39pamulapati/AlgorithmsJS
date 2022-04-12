@@ -1,46 +1,79 @@
-class stack{
+class stackData{
     constructor() {
-        this.data =[];
-        this.top = 0;
+        this.MAX = 10
+        this.top = -1;
+        this.stack = new Array(this.MAX);
     }
-    stackPush(element){
-        this.data[this.top] = element;
-        this.top =this.top+1
-
-    }
-    stackLength(){
-        return this.top;
-    }
-    peek(){
-        return this.data[this.top-1];
-    }
-    isEmpty() {
-        return this.top == 0;
-    }
-    pop(){
-        if(this.isEmpty() == false){
-            this.top = this.top -1;
-            return this.data.pop();
+    isEmpty()
+    {
+        if (this.top == -1)
+        {
+            console.log("Stack is empty.");
         }
+        else
+        {
+            console.log("Stack is not empty.");
+        }
+    }
 
+    size()
+    {
+        return this.top + 1;
+    }
+    push( x)
+{
+    if (this.top == (this.MAX - 1))
+{
+    console.log("Stack size limit reached.");
+}
+else
+{
+    this.stack[++this.top] = x;
+    //console.log(x + " is added into the stack.");
+}
+}
+    pop()
+    {
+        if (this.top < 0)
+        {
+            console.log("Stack is empty.");
+        }
+        else
+        {
+            let x = this.stack[this.top--];
+            console.log(x + " is deleted from the stack.");
+        }
+    }
+    peek()
+    {
+        if (this.top < 0)
+        {
+            console.log("Stack is empty.");
+            return 0;
+        }
+        else
+        {
+            //Console.WriteLine("Stack not empty.");
+            return this.stack[this.top];
+        }
     }
     print(){
 
-        for (let i = this.top-1; i >= 0; i--)
+        for (let i = this.top; i >= 0; i--)
         {
-            console.log(this.data[i]);
+            console.log(this.stack[i]);
         }
     }
 }
-const Stack = new stack();
-Stack.stackPush(10);
-Stack.stackPush(20);
-Stack.stackPush(30);
-Stack.stackPush(40);
+const Stack = new stackData();
+Stack.push(10);
+Stack.push(20);
+Stack.push(30);
+Stack.push(40);
+
 console.log(Stack.print());
 Stack.pop();
-Stack.pop();
 console.log(Stack.print());
-console.log("The top element is " +Stack.peek());
-console.log("The length  is " +Stack.stackLength());
+console.log(Stack.peek());
+
 
