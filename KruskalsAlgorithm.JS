@@ -1,11 +1,4 @@
-class subset
-{
-    constructor(v)
-    {
-        this.parent = 0;
-        this.rank = 0;
-    }
-}
+
 class Edge {
     constructor()
     {
@@ -23,25 +16,15 @@ class Graph {
             this.edge[i] = [];
         }
     }
-    Union(subsets, x,y)
+    Union(parent, x,y)
     {
-        let xroot = this.find(subsets, x);
-        let yroot = this.find(subsets, y);
-
-        if (subsets[xroot].rank < subsets[yroot].rank)
-            subsets[xroot].parent = yroot;
-        else if (subsets[yroot].rank < subsets[xroot].rank)
-            subsets[yroot].parent = xroot;
-        else {
-            subsets[xroot].parent = yroot;
-            subsets[yroot].rank++;
+        parent[x] = y;
         }
-    }
-    find(subsets,i)
+    find(parent,i)
     {
-        if (subsets[i].parent != i)
-            subsets[i].parent = this.find(subsets, subsets[i].parent);
-        return subsets[i].parent;
+        if (parent[i] == i)
+            return i;
+        return this.find(parent, parent[i]);
     }
      KruskalMST()
     {
@@ -56,25 +39,24 @@ class Graph {
             return a.weight - b.weight;
         });
 
-        let subsets = new subset(V);
-        for (let v = 0; v < V; ++v)
+        let parent = new Array(V);
+        for (let v = 0; v < V; v++)
         {
-            subsets[v] = new subset();
-            subsets[v].parent = v;
-            subsets[v].rank = 0;
+            parent[v] = v;
         }
+
 
         i = 0;
         while (e < V - 1)
         {
             let next_edge = new Edge();
             next_edge = this.edge[i++];
-            let x = this.find(subsets, next_edge.src);
-            let y = this.find(subsets, next_edge.dest);
+            let x = this.find(parent, next_edge.src);
+            let y = this.find(parent, next_edge.dest);
             if (x != y)
             {
                 result[e++] = next_edge;
-                this.Union(subsets, x, y);
+                this.Union(parent, x, y);
             }
         }
         console.log("Following are the edges in " + "the constructed MST");

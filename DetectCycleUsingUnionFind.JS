@@ -5,14 +5,6 @@ class Edge {
         this.dest = 0;
     }
 }
-class subset
-{
-    constructor()
-    {
-        this.parent = 0;
-        this.rank = 0;
-    }
-}
 class Graph{
     constructor(nV,nE){
         this.V = nV;
@@ -27,25 +19,16 @@ class Graph{
 
 // class to represent Subset
 
-Union(subsets, x,y)
+Union(parent, x,y)
 {
-    let xroot = this.find(subsets, x);
-    let yroot = this.find(subsets, y);
-
-    if (subsets[xroot].rank < subsets[yroot].rank)
-        subsets[xroot].parent = yroot;
-    else if (subsets[yroot].rank < subsets[xroot].rank)
-        subsets[yroot].parent = xroot;
-    else {
-        subsets[xroot].parent = yroot;
-        subsets[yroot].rank++;
+    parent[x] = y;
     }
-}
-find(subsets,i)
+
+find(parent,i)
 {
-    if (subsets[i].parent != i)
-        subsets[i].parent = this.find(subsets, subsets[i].parent);
-    return subsets[i].parent;
+    if (parent[i] == i)
+        return i;
+    return this.find(parent, parent[i]);
 }
 
 isCycle(graph)
@@ -53,26 +36,22 @@ isCycle(graph)
     let V = graph.V;
     let E = graph.E;
 
-    let subsets = new subset(V);
+    let parent = new Array(V);
     for (let v = 0; v < V; v++)
     {
-        subsets[v] = new subset();
-        subsets[v].parent = v;
-        subsets[v].rank = 0;
+        parent[v] = v;
     }
 
     for (let e = 0; e < E; e++)
     {
-        let x = this.find(subsets, graph.edge[e].src);
-        let y = this.find(subsets, graph.edge[e].dest);
+        let x = this.find(parent, graph.edge[e].src);
+        let y = this.find(parent, graph.edge[e].dest);
         if (x == y)
             return 1;
-        this.Union(subsets, x, y);
+        this.Union(parent, x, y);
     }
     return 0;
 }
-
-
 }
 let V = 3, E = 3;
 const graph = new Graph(V, E);

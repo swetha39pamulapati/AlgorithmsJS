@@ -12,14 +12,14 @@ class createBT {
         this.root = root;
     }
 
-    createBinaryTree(arr, i, root) {
+    createBinaryTree(arr, i, rax) {
         if (i < arr.length) {
             let temp = new Node(arr[i]);
-            root = temp;
-            root.left = this.createBinaryTree(arr, 2 * i + 1, root.left);
-            root.right = this.createBinaryTree(arr, 2 * i + 2, root.right);
+            rax = temp;
+            rax.left = this.createBinaryTree(arr, 2 * i + 1, rax.left);
+            rax.right = this.createBinaryTree(arr, 2 * i + 2, rax.right);
         }
-        return root;
+        return rax;
     }
 
     preOrderTraversal(root) {

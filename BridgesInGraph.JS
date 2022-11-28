@@ -1,7 +1,7 @@
 class Graph {
 
     constructor(x) {
-        this.parent =new Array(this.vertex);
+
         this.visited =new Array(this.vertex);
         this.disc = new Array(this.vertex);
         this.low =new Array(this.vertex);
@@ -19,28 +19,28 @@ class Graph {
     bridgeUtil(u,visited,low,disc,parent){
         visited[u] = true;
         this.disc[u] = this.low[u] = ++this.time;
-        for(let i of this.adjList[u].values()){
-            let v =i;
+        for(let v of this.adjList[u].values()){
+            if (v == parent)
+                continue;
             if(!visited[v]){
-                parent[v] = u;
-                this.bridgeUtil(v,visited,low,disc,parent);
+
+                this.bridgeUtil(v,visited,low,disc,u);
                 this.low[u] = Math.min(low[u],low[v]);
                 if(low[v]>disc[u])
                     console.log(u +" "+ v);
             }
-            else if(v!= parent[u]){
+            else {
                 low[u] = Math.min(low[u],disc[v]);
             }
         }
 }
     bridge(){
         for(let i =0; i<this.vertex; i++){
-            this.parent[i] = -1;
             this.visited[i] = 0
         }
         for(let j = 0; j<this.vertex; j++){
             if(!this.visited[j]){
-                this.bridgeUtil(j,this.visited,this.low,this.disc,this.parent);
+                this.bridgeUtil(j,this.visited,this.low,this.disc,-1);
             }
         }
 

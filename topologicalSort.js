@@ -11,26 +11,47 @@ class Graph
         this.adjList[n].push(e);
 
     }
-    topSortUtil(v,visited,data){
-        visited[v] = true;
-        for(let i of this.adjList[v].values())
-        {
-            let n = i
-            if (!visited[n])
-                this.topSortUtil(n, visited,data);
-        }
-        data.push(v);
-    }
+
     topSort(){
-        let visited = [];
-        let data = new Array(this.vertex);
-        for(let i =0; i<this.vertex;i++){
-            if(!visited[i]){
-                this.topSortUtil(i,visited,data);
+        let indegree = new Array(this.vertex);
+        for(let i = 0; i < this.vertex; i++)
+            indegree[i] = 0;
+        for (let i = 0; i < this.vertex; i++) {
+            let temp = this.adjList[i];
+            for (let node = 0; node < temp.length; node++) {
+                indegree[temp[node]]++;
             }
         }
-        data.forEach(element => console.log(element));
-    }
+        let q = [];
+        for (let i = 0; i < this.vertex; i++) {
+            if (indegree[i] == 0)
+                q.push(i);
+        }
+        let cnt = 0;
+        let topOrder = [];
+        while (q.length!=0)
+        {
+            let u = q.shift();
+            topOrder.push(u);
+
+            for (let node = 0; node < this.adjList[u].length; node++)
+            {
+                if (--indegree[this.adjList[u][node]] == 0)
+                    q.push(this.adjList[u][node]);
+            }
+            cnt++;
+        }
+        if (cnt != this.vertex) {
+            document.write(
+                "There exists a cycle in the graph");
+            return;
+        }
+        for (let i = 0; i < topOrder.length; i++)
+        {
+            console.log(topOrder[i] + " ");
+        }
+
+}
 }
 const g = new Graph(6);
 g.addEdge(5, 2);
